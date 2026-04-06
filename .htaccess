@@ -1,28 +1,19 @@
 RewriteEngine On
-
-# 🔥 FORCER LE RESET DU CACHE (temporaire)
-<IfModule mod_headers.c>
-    Header always set Cache-Control "no-cache, no-store, must-revalidate"
-    Header always set Pragma "no-cache"
-    Header always set Expires 0
-</IfModule>
-
-# 🔥 CASSER LES ANCIENNES REDIRECTIONS 301 (IMPORTANT)
-RewriteRule ^carte$ /carte [R=302,L]
-RewriteRule ^boissons$ /boissons [R=302,L]
-RewriteRule ^vins$ /vins [R=302,L]
-RewriteRule ^contact$ /contact [R=302,L]
+Options -MultiViews
 
 # Redirige /index.php vers /
 RewriteCond %{THE_REQUEST} \s/+index\.php(?:[\s?]|$) [NC]
 RewriteRule ^index\.php$ / [R=301,L]
 
-# Redirige /page.php vers /page
+# Redirige /page.php vers /page sans boucle
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php(?:[\s?]|$) [NC]
 RewriteRule ^(.+)\.php$ /$1 [R=301,L]
+
+# Sert la page d'accueil
+RewriteRule ^$ index.php [L]
 
 # Sert /page via /page.php si le fichier existe
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.+)$ $1.php [L,QSA]
+RewriteRule ^(.+?)/?$ $1.php [L,QSA]

@@ -19,7 +19,7 @@ $daysOrder = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dima
 try {
     $pdo = new PDO($dsn, $dbConfig['user'], $dbConfig['pass'], $options);
 
-    $sql_settings = "SELECT nom, adresse_physique, Maps_url, telephone, email, a_propos, a_propos2, instagram FROM restaurant_settings ORDER BY id ASC LIMIT 1";
+    $sql_settings = "SELECT * FROM restaurant_settings ORDER BY id ASC LIMIT 1";
     $stmt_s = $pdo->query($sql_settings);
     $settings = $stmt_s->fetch();
 
@@ -44,6 +44,18 @@ try {
         }
         if (!empty($settings['a_propos2'])) {
             $aboutText2 = $settings['a_propos2'];
+        }
+        if (!empty($settings['a_propos3'])) {
+            $aboutText3 = $settings['a_propos3'];
+        }
+        if (!empty($settings['a_propos4'])) {
+            $aboutText4 = $settings['a_propos4'];
+        }
+        if (!empty($settings['a_propos5'])) {
+            $aboutText5 = $settings['a_propos5'];
+        }
+        if (!empty($settings['a_propos6'])) {
+            $aboutText6 = $settings['a_propos6'];
         }
         if (!empty($settings['instagram'])) {
             $instagram = $settings['instagram'];
@@ -289,20 +301,48 @@ $statusClasses = $isOpenNow
             <div class="grid gap-6 md:grid-cols-2">
                 <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
                     <p class="text-lg leading-8 text-zinc-700">
-                        <?php echo nl2br(htmlspecialchars($aboutText)); ?>
+                        <?php echo nl2br($aboutText); ?>
                     </p>
                 </div>
                 <?php if (!empty($aboutText2)): ?>
                     <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
                         <p class="text-lg leading-8 text-zinc-700">
-                            <?php echo nl2br(htmlspecialchars($aboutText2)); ?>
+                            <?php echo nl2br($aboutText2); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($aboutText3)): ?>
+                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
+                        <p class="text-lg leading-8 text-zinc-700">
+                            <?php echo nl2br($aboutText3); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($aboutText4)): ?>
+                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
+                        <p class="text-lg leading-8 text-zinc-700">
+                            <?php echo nl2br($aboutText4); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($aboutText5)): ?>
+                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
+                        <p class="text-lg leading-8 text-zinc-700">
+                            <?php echo nl2br($aboutText5); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($aboutText6)): ?>
+                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
+                        <p class="text-lg leading-8 text-zinc-700">
+                            <?php echo nl2br($aboutText6); ?>
                         </p>
                     </div>
                 <?php endif; ?>
             </div>
         </section>
 
-        <section id="familial" class="mb-16">
+        <!--<section id="familial" class="mb-16">
             <h2 class="section-title mb-8 text-center text-2xl">Un lieu familial</h2>
             <div class="grid gap-6 md:grid-cols-2">
                 <article class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-7 shadow-sm">
@@ -318,19 +358,24 @@ $statusClasses = $isOpenNow
                     </p>
                 </article>
             </div>
+        </section>-->
+
+        <section id="familial" class="mb-16">
+            <h2 class="section-title mb-8 text-center text-2xl">Le restaurant</h2>
+            <div class="grid gap-6 grid-cols-2 md:grid-cols-3">
+                <img src="img/IMG_9367.JPG" alt="Photo intérieur du restaurant <?php echo htmlspecialchars($restaurantName); ?>" class="h-full w-full object-cover rounded-lg" />
+                <img src="img/IMG_9368.JPG" alt="Photo extérieur du restaurant <?php echo htmlspecialchars($restaurantName); ?>" class="h-full w-full object-cover rounded-lg" />
+                <img src="img/IMG_9369.JPG" alt="Photo extérieur du restaurant <?php echo htmlspecialchars($restaurantName); ?>" class="h-full w-full object-cover rounded-lg" />
+                <img src="img/ext-bg.jpg" alt="Photo extérieur du restaurant <?php echo htmlspecialchars($restaurantName); ?>" class="h-full w-full object-cover rounded-lg" />
+                <img src="img/IMG_9371.WEBP" alt="Photo du restaurant <?php echo htmlspecialchars($restaurantName); ?>" class="h-full w-full object-cover rounded-lg" />
+                <img src="img/IMG_9372.WEBP" alt="Photo intérieur du restaurant <?php echo htmlspecialchars($restaurantName); ?>" class="h-full w-full object-cover rounded-lg" />
+            </div>
         </section>
 
         <section id="venir" class="mb-8">
             <h2 class="section-title mb-8 text-center text-2xl">Informations pratiques</h2>
             <div class="grid gap-6 lg:grid-cols-2">
                 <div class="overflow-hidden rounded-lg border border-zinc-200 shadow-sm">
-                    <iframe
-                        title="Carte Google Maps de <?php echo htmlspecialchars($restaurantName); ?>"
-                        src="<?php echo htmlspecialchars($mapsIframeSrc); ?>"
-                        class="h-[340px] w-full"
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
                     <div class="border-t border-zinc-200 bg-[#EDE8D0] p-6">
                         <h3 class="mb-3 text-lg uppercase tracking-[0.08em]">Adresse</h3>
                         <p class="mb-3 text-zinc-700"><?php echo htmlspecialchars($address); ?></p>
@@ -340,8 +385,15 @@ $statusClasses = $isOpenNow
                         <?php if (!empty($email)): ?>
                             <p class="mb-4 text-zinc-700"><strong>Email :</strong> <?php echo htmlspecialchars($email); ?></p>
                         <?php endif; ?>
-                        <a href="https://www.google.com/maps/search/?api=1&query=<?php echo $mapsQuery; ?>" target="_blank" rel="noopener noreferrer" class="inline-flex rounded border border-black px-5 py-2 text-sm uppercase tracking-[0.12em] transition hover:bg-black hover:text-white">Itineraire Google Maps</a>
+                        <a href="https://www.google.com/maps/dir//Maison+M%C3%A9linot,+134+Rte+de+Flassan,+84410+B%C3%A9doin/@47.2963953,-1.5072446,2104425m/data=!3m1!1e3!4m9!4m8!1m0!1m5!1m1!1s0x12ca713e9263e85b:0x680762da1015e8e1!2m2!1d5.181982!2d44.1229875!3e0?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="inline-flex rounded border border-black px-5 py-2 text-sm uppercase tracking-[0.12em] transition hover:bg-black hover:text-white">Itineraire Google Maps</a>
                     </div>
+                    <iframe
+                            title="Carte Google Maps de <?php echo htmlspecialchars($restaurantName); ?>"
+                            src="<?php echo htmlspecialchars($mapsIframeSrc); ?>"
+                            class="h-[340px] w-full"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
                 <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-7 shadow-sm">
                     <h3 class="mb-4 text-xl uppercase tracking-[0.08em]">Horaires</h3>

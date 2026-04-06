@@ -60,7 +60,8 @@ try {
 
             <div>
                 <h2 class="mb-2 text-lg uppercase tracking-[0.1em] text-zinc-900">Hebergement</h2>
-                <p>Site heberge sur votre infrastructure WAMP locale.</p>
+                <p><strong>Hebergeur :</strong> PulseHeberg</p>
+                <p><strong>Panel d'administration :</strong> Plesk</p>
             </div>
 
             <div>

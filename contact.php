@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if ($restaurantEmail !== ''): ?>
                     <p class="mb-6 text-zinc-700"><strong>Email :</strong><br><?php echo htmlspecialchars($restaurantEmail, ENT_QUOTES, 'UTF-8'); ?></p>
                 <?php endif; ?>
-                <p class="text-sm text-zinc-600">Nous faisons au mieux pour vous repondre dans la journee.</p>
+                <p class="text-sm text-zinc-600">Nous faisons au mieux pour vous repondre au plus vite.</p>
             </aside>
         </div>
     </main>

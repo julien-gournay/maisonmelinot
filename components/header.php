@@ -37,6 +37,14 @@ $headerSpacerClass = $headerAbsolute ? 'hidden' : 'block h-24 md:h-28';
 <?php if (!$headerAbsolute): ?>
     <div data-site-header-spacer class="<?php echo $headerSpacerClass; ?>"></div>
 <?php endif; ?>
+<style>
+    button:hover,
+    input[type="button"]:hover,
+    input[type="submit"]:hover,
+    input[type="reset"]:hover {
+        cursor: pointer;
+    }
+</style>
 <header
     data-site-header
     class="<?php echo $headerRootClass; ?> transition-all duration-300 ease-out <?php echo $headerAbsolute ? '' : 'shadow-lg shadow-black/10'; ?>">
@@ -54,10 +62,10 @@ $headerSpacerClass = $headerAbsolute ? 'hidden' : 'block h-24 md:h-28';
 
                 <div class="flex gap-3 text-xs uppercase tracking-[0.15em] md:text-sm">
                     <a href="/" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'home' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Accueil</a>
-                    <a href="../carte.php" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'nourriture' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Notre Carte</a>
-                    <a href="../vins.php" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'vins' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Nos Vins</a>
-                    <a href="../boissons.php" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'boissons' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Nos Boissons</a>
-                    <a href="../contact.php" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'contact' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Contact</a>
+                    <a href="/carte" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'nourriture' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Notre Carte</a>
+                    <a href="/vins" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'vins' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Nos Vins</a>
+                    <a href="/boissons" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'boissons' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Nos Boissons</a>
+                    <a href="/contact" class="rounded border px-4 py-2 transition <?php echo $headerActivePage === 'contact' ? 'border-white bg-white text-black' : 'border-white/70 text-white hover:bg-white hover:text-black'; ?>">Contact</a>
                 </div>
             </div>
 
@@ -100,9 +108,9 @@ $headerSpacerClass = $headerAbsolute ? 'hidden' : 'block h-24 md:h-28';
 
                 <div class="mt-10 flex flex-1 flex-col justify-center gap-4 text-sm uppercase tracking-[0.2em]">
                     <a href="/" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'home' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Accueil</a>
-                    <a href="/carte/plats" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'nourriture' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Notre Carte</a>
-                    <a href="/carte/vins" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'vins' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Nos Vins</a>
-                    <a href="/carte/boissons" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'boissons' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Nos boissons</a>
+                    <a href="/carte" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'nourriture' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Notre Carte</a>
+                    <a href="/vins" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'vins' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Nos Vins</a>
+                    <a href="/boissons" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'boissons' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Nos boissons</a>
                     <a href="/contact" class="rounded border px-4 py-3 text-center <?php echo $headerActivePage === 'contact' ? 'border-white bg-white text-black' : 'border-white/80 text-white'; ?>">Contact</a>
                 </div>
             </div>
