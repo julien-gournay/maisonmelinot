@@ -363,9 +363,117 @@ if ($isAuthenticated && $pdo) {
         }
         .sidebar { background: #1f2937; }
         .content { background: white; }
+
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -256px;
+                top: 0;
+                width: 256px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                overflow-y: auto;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+            .mobile-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #1f2937;
+                color: white;
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            .menu-toggle {
+                cursor: pointer;
+                font-size: 1.5rem;
+                background: none;
+                border: none;
+                color: white;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-header,
+            .sidebar-overlay,
+            .menu-toggle {
+                display: none !important;
+            }
+        }
+
+        /* Table responsive */
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.875rem;
+            }
+            table th, table td {
+                padding: 0.5rem !important;
+            }
+            .actions-column {
+                white-space: nowrap;
+            }
+        }
+
+        /* Cursor pointer on buttons */
+        button, a[class*="bg-"], .cursor-pointer {
+            cursor: pointer;
+        }
+
+        /* Padding adjustments for mobile */
+        @media (max-width: 768px) {
+            .p-8 {
+                padding: 1rem;
+            }
+            .p-6 {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.5rem !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <script>
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Close menu when clicking overlay
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('sidebar-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', closeMobileMenu);
+            }
+        });
+    </script>
     <?php if (!$isAuthenticated): ?>
         <!-- Page de connexion -->
         <div class="min-h-screen flex items-center justify-center bg-gray-900">
@@ -405,28 +513,36 @@ if ($isAuthenticated && $pdo) {
         </div>
     <?php else: ?>
         <!-- Interface backoffice -->
-        <div class="flex h-screen">
+        <div id="sidebar-overlay" class="sidebar-overlay" onclick="closeMobileMenu()"></div>
+
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <h2 class="text-xl font-bold">Backoffice</h2>
+            <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+
+        <div class="flex h-screen md:h-auto flex-col md:flex-row">
             <!-- Sidebar -->
-            <div class="sidebar w-64 text-white p-6">
-                <h2 class="text-2xl font-bold mb-8">Backoffice</h2>
+            <div id="sidebar" class="sidebar w-full md:w-64 text-white p-6 md:block">
+                <h2 class="text-2xl font-bold mb-8 hidden md:block">Backoffice</h2>
                 <nav class="space-y-3">
-                    <a href="?page=dashboard" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'dashboard' ? 'bg-blue-600' : ''; ?>">
+                    <a href="?page=dashboard" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'dashboard' ? 'bg-blue-600' : ''; ?>" onclick="closeMobileMenu()">
                         Tableau de bord
                     </a>
-                    <a href="?page=settings" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'settings' ? 'bg-blue-600' : ''; ?>">
+                    <a href="?page=settings" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'settings' ? 'bg-blue-600' : ''; ?>" onclick="closeMobileMenu()">
                         Paramètres restaurant
                     </a>
-                    <a href="?page=horaires" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'horaires' ? 'bg-blue-600' : ''; ?>">
+                    <a href="?page=horaires" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'horaires' ? 'bg-blue-600' : ''; ?>" onclick="closeMobileMenu()">
                         Horaires
                     </a>
-                    <a href="?page=exceptions" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'exceptions' ? 'bg-blue-600' : ''; ?>">
+                    <a href="?page=exceptions" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'exceptions' ? 'bg-blue-600' : ''; ?>" onclick="closeMobileMenu()">
                         Exceptions
                     </a>
-                    <a href="?page=files" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'files' ? 'bg-blue-600' : ''; ?>">
+                    <a href="?page=files" class="block px-4 py-2 rounded hover:bg-gray-700 transition <?php echo $page === 'files' ? 'bg-blue-600' : ''; ?>" onclick="closeMobileMenu()">
                         PDF
                     </a>
                     <hr class="border-gray-600 my-4" />
-                    <a href="?logout=1" class="block px-4 py-2 rounded hover:bg-red-600 transition">
+                    <a href="?logout=1" class="block px-4 py-2 rounded hover:bg-red-600 transition" onclick="closeMobileMenu()">
                         Déconnexion
                     </a>
                 </nav>
@@ -434,7 +550,7 @@ if ($isAuthenticated && $pdo) {
 
             <!-- Contenu -->
             <div class="flex-1 overflow-auto">
-                <div class="p-8">
+                <div class="p-4 md:p-8">
                     <?php if ($message): ?>
                         <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
                             <?php echo htmlspecialchars($message); ?>
@@ -451,33 +567,33 @@ if ($isAuthenticated && $pdo) {
                     // Tableau de bord
                     if ($page === 'dashboard'):
                     ?>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-6">Tableau de bord</h1>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-white p-6 rounded-lg shadow">
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Tableau de bord</h1>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                            <div class="bg-white p-4 md:p-6 rounded-lg shadow">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Paramètres</h3>
-                                <p class="text-gray-600 mb-4">Modifier les informations du restaurant</p>
-                                <a href="?page=settings" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                <p class="text-gray-600 mb-4 text-sm">Modifier les informations du restaurant</p>
+                                <a href="?page=settings" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
                                     Accéder
                                 </a>
                             </div>
-                            <div class="bg-white p-6 rounded-lg shadow">
+                            <div class="bg-white p-4 md:p-6 rounded-lg shadow">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Horaires</h3>
-                                <p class="text-gray-600 mb-4">Gérer les horaires d'ouverture</p>
-                                <a href="?page=horaires" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                <p class="text-gray-600 mb-4 text-sm">Gérer les horaires d'ouverture</p>
+                                <a href="?page=horaires" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
                                     Accéder
                                 </a>
                             </div>
-                            <div class="bg-white p-6 rounded-lg shadow">
+                            <div class="bg-white p-4 md:p-6 rounded-lg shadow">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Exceptions</h3>
-                                <p class="text-gray-600 mb-4">Ajouter des fermetures exceptionnelles</p>
-                                <a href="?page=exceptions" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                <p class="text-gray-600 mb-4 text-sm">Ajouter des fermetures exceptionnelles</p>
+                                <a href="?page=exceptions" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
                                     Accéder
                                 </a>
                             </div>
-                            <div class="bg-white p-6 rounded-lg shadow">
+                            <div class="bg-white p-4 md:p-6 rounded-lg shadow">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">PDF</h3>
-                                <p class="text-gray-600 mb-4">Télécharger les cartes PDF</p>
-                                <a href="?page=files" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                <p class="text-gray-600 mb-4 text-sm">Télécharger les cartes PDF</p>
+                                <a href="?page=files" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
                                     Accéder
                                 </a>
                             </div>
@@ -487,8 +603,8 @@ if ($isAuthenticated && $pdo) {
                     elseif ($page === 'settings' && $pdo):
                         $settings = $pdo->query("SELECT * FROM restaurant_settings ORDER BY id ASC LIMIT 1")->fetch();
                     ?>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-6">Paramètres restaurant</h1>
-                        <div class="max-w-2xl bg-white p-6 rounded-lg shadow">
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Paramètres restaurant</h1>
+                        <div class="w-full md:max-w-2xl bg-white p-4 md:p-6 rounded-lg shadow">
                             <form method="post" action="">
                                 <input type="hidden" name="action" value="save_settings" />
 
@@ -497,7 +613,7 @@ if ($isAuthenticated && $pdo) {
                                     <input type="text" name="nom" value="<?php echo htmlspecialchars($settings['nom'] ?? ''); ?>" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                                 </div>
 
-                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken(), ENT_QUOTES, 'UTF-8'); ?>" />
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken(), ENT_QUOTES, 'UTF-8'); ?>" />
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Adresse physique</label>
@@ -521,20 +637,20 @@ if ($isAuthenticated && $pdo) {
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">URL Google Maps</label>
-                                    <textarea name="Maps_url" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"><?php echo htmlspecialchars($settings['Maps_url'] ?? ''); ?></textarea>
+                                    <textarea name="Maps_url" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"><?php echo htmlspecialchars($settings['Maps_url'] ?? ''); ?></textarea>
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">À propos (bloc 1)</label>
-                                    <textarea name="a_propos" rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"><?php echo htmlspecialchars($settings['a_propos'] ?? ''); ?></textarea>
+                                    <textarea name="a_propos" rows="4 md:rows-5" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"><?php echo htmlspecialchars($settings['a_propos'] ?? ''); ?></textarea>
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">À propos (bloc 2)</label>
-                                    <textarea name="a_propos2" rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"><?php echo htmlspecialchars($settings['a_propos2'] ?? ''); ?></textarea>
+                                    <textarea name="a_propos2" rows="4 md:rows-5" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"><?php echo htmlspecialchars($settings['a_propos2'] ?? ''); ?></textarea>
                                 </div>
 
-                                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <button type="submit" class="w-full md:w-auto bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer">
                                     Enregistrer les modifications
                                 </button>
                             </form>
@@ -544,9 +660,9 @@ if ($isAuthenticated && $pdo) {
                     elseif ($page === 'horaires' && $pdo):
                         $horaires = $pdo->query("SELECT * FROM horaires ORDER BY id ASC")->fetchAll();
                     ?>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-6">Horaires</h1>
-                        
-                        <div class="max-w-2xl bg-white p-6 rounded-lg shadow mb-8">
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Horaires</h1>
+
+                        <div class="w-full md:max-w-2xl bg-white p-4 md:p-6 rounded-lg shadow mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Ajouter un horaire</h3>
                             <form method="post" action="">
                                 <input type="hidden" name="action" value="add_horaire" />
@@ -555,7 +671,7 @@ if ($isAuthenticated && $pdo) {
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Jour</label>
-                                    <select name="horaire_jour" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <select name="horaire_jour" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                                         <option value="">-- Sélectionner un jour --</option>
                                         <option value="Lundi">Lundi</option>
                                         <option value="Mardi">Mardi</option>
@@ -569,68 +685,70 @@ if ($isAuthenticated && $pdo) {
                                 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Heure début</label>
-                                    <input type="time" name="horaire_h_debut" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <input type="time" name="horaire_h_debut" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
                                 </div>
                                 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Heure fin</label>
-                                    <input type="time" name="horaire_h_fin" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <input type="time" name="horaire_h_fin" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
                                 </div>
                                 
-                                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <button type="submit" class="w-full md:w-auto bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer">
                                     Ajouter horaire
                                 </button>
                             </form>
                         </div>
                         
-                        <div class="max-w-4xl bg-white p-6 rounded-lg shadow">
+                        <div class="w-full bg-white p-4 md:p-6 rounded-lg shadow overflow-x-auto">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Horaires existants</h3>
                             <form method="post" action="">
                                 <input type="hidden" name="action" value="save_horaires" />
                                 
                                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken(), ENT_QUOTES, 'UTF-8'); ?>" />
 
-                                <table class="w-full border-collapse border border-gray-300">
-                                    <thead class="bg-gray-100">
-                                        <tr>
-                                            <th class="border border-gray-300 px-4 py-2">Jour</th>
-                                            <th class="border border-gray-300 px-4 py-2">Début</th>
-                                            <th class="border border-gray-300 px-4 py-2">Fin</th>
-                                            <th class="border border-gray-300 px-4 py-2">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($horaires as $h): ?>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full border-collapse border border-gray-300 text-sm">
+                                        <thead class="bg-gray-100">
                                             <tr>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    <select name="horaires[<?php echo $h['id']; ?>][jour]" class="w-full px-2 py-1 border border-gray-200 rounded">
-                                                        <option value="">-- Jour --</option>
-                                                        <option value="Lundi" <?php echo $h['jour'] === 'Lundi' ? 'selected' : ''; ?>>Lundi</option>
-                                                        <option value="Mardi" <?php echo $h['jour'] === 'Mardi' ? 'selected' : ''; ?>>Mardi</option>
-                                                        <option value="Mercredi" <?php echo $h['jour'] === 'Mercredi' ? 'selected' : ''; ?>>Mercredi</option>
-                                                        <option value="Jeudi" <?php echo $h['jour'] === 'Jeudi' ? 'selected' : ''; ?>>Jeudi</option>
-                                                        <option value="Vendredi" <?php echo $h['jour'] === 'Vendredi' ? 'selected' : ''; ?>>Vendredi</option>
-                                                        <option value="Samedi" <?php echo $h['jour'] === 'Samedi' ? 'selected' : ''; ?>>Samedi</option>
-                                                        <option value="Dimanche" <?php echo $h['jour'] === 'Dimanche' ? 'selected' : ''; ?>>Dimanche</option>
-                                                    </select>
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    <input type="time" name="horaires[<?php echo $h['id']; ?>][h_debut]" value="<?php echo htmlspecialchars($h['h_debut']); ?>" class="w-full px-2 py-1 border border-gray-200 rounded" />
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    <input type="time" name="horaires[<?php echo $h['id']; ?>][h_fin]" value="<?php echo htmlspecialchars($h['h_fin']); ?>" class="w-full px-2 py-1 border border-gray-200 rounded" />
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2 text-center">
-                                                    <a href="?page=horaires&action=delete_horaire&id=<?php echo $h['id']; ?>" onclick="return confirm('Confirmer la suppression ?')" class="text-red-600 hover:text-red-800">
-                                                        Supprimer
-                                                    </a>
-                                                </td>
+                                                <th class="border border-gray-300 px-2 md:px-4 py-2">Jour</th>
+                                                <th class="border border-gray-300 px-2 md:px-4 py-2">Début</th>
+                                                <th class="border border-gray-300 px-2 md:px-4 py-2">Fin</th>
+                                                <th class="border border-gray-300 px-2 md:px-4 py-2">Actions</th>
                                             </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                                
-                                <button type="submit" class="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($horaires as $h): ?>
+                                                <tr>
+                                                    <td class="border border-gray-300 px-2 md:px-4 py-2">
+                                                        <select name="horaires[<?php echo $h['id']; ?>][jour]" class="w-full px-2 py-1 border border-gray-200 rounded text-sm">
+                                                            <option value="">-- Jour --</option>
+                                                            <option value="Lundi" <?php echo $h['jour'] === 'Lundi' ? 'selected' : ''; ?>>Lundi</option>
+                                                            <option value="Mardi" <?php echo $h['jour'] === 'Mardi' ? 'selected' : ''; ?>>Mardi</option>
+                                                            <option value="Mercredi" <?php echo $h['jour'] === 'Mercredi' ? 'selected' : ''; ?>>Mercredi</option>
+                                                            <option value="Jeudi" <?php echo $h['jour'] === 'Jeudi' ? 'selected' : ''; ?>>Jeudi</option>
+                                                            <option value="Vendredi" <?php echo $h['jour'] === 'Vendredi' ? 'selected' : ''; ?>>Vendredi</option>
+                                                            <option value="Samedi" <?php echo $h['jour'] === 'Samedi' ? 'selected' : ''; ?>>Samedi</option>
+                                                            <option value="Dimanche" <?php echo $h['jour'] === 'Dimanche' ? 'selected' : ''; ?>>Dimanche</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="border border-gray-300 px-2 md:px-4 py-2">
+                                                        <input type="time" name="horaires[<?php echo $h['id']; ?>][h_debut]" value="<?php echo htmlspecialchars($h['h_debut']); ?>" class="w-full px-2 py-1 border border-gray-200 rounded text-sm" />
+                                                    </td>
+                                                    <td class="border border-gray-300 px-2 md:px-4 py-2">
+                                                        <input type="time" name="horaires[<?php echo $h['id']; ?>][h_fin]" value="<?php echo htmlspecialchars($h['h_fin']); ?>" class="w-full px-2 py-1 border border-gray-200 rounded text-sm" />
+                                                    </td>
+                                                    <td class="border border-gray-300 px-2 md:px-4 py-2 text-center">
+                                                        <a href="?page=horaires&action=delete_horaire&id=<?php echo $h['id']; ?>" onclick="return confirm('Confirmer la suppression ?')" class="text-red-600 hover:text-red-800 cursor-pointer text-sm">
+                                                            Supprimer
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <button type="submit" class="mt-4 w-full md:w-auto bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition cursor-pointer">
                                     Enregistrer les modifications
                                 </button>
                             </form>
@@ -640,9 +758,9 @@ if ($isAuthenticated && $pdo) {
                     elseif ($page === 'exceptions' && $pdo):
                         $exceptions = $pdo->query("SELECT * FROM exceptions ORDER BY date DESC")->fetchAll();
                     ?>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-6">Exceptions d'ouverture</h1>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Exceptions d'ouverture</h1>
 
-                        <div class="max-w-2xl bg-white p-6 rounded-lg shadow mb-8">
+                        <div class="w-full md:max-w-2xl bg-white p-4 md:p-6 rounded-lg shadow mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Ajouter une exception</h3>
                             <form method="post" action="">
                                 <input type="hidden" name="action" value="add_exception" />
@@ -651,72 +769,74 @@ if ($isAuthenticated && $pdo) {
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                                    <input type="date" name="exception_date" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <input type="date" name="exception_date" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="exception_ferme" class="mr-2" />
+                                        <input type="checkbox" name="exception_ferme" class="mr-2 cursor-pointer" />
                                         <span class="text-sm font-medium text-gray-700">Restaurant fermé</span>
                                     </label>
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Horaire début (optionnel)</label>
-                                    <input type="time" name="exception_h_debut" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <input type="time" name="exception_h_debut" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Horaire fin (optionnel)</label>
-                                    <input type="time" name="exception_h_fin" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <input type="time" name="exception_h_fin" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
                                 </div>
 
-                                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <button type="submit" class="w-full md:w-auto bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer">
                                     Ajouter exception
                                 </button>
                             </form>
                         </div>
 
-                        <div class="max-w-4xl bg-white p-6 rounded-lg shadow">
+                        <div class="w-full bg-white p-4 md:p-6 rounded-lg shadow overflow-x-auto">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Exceptions existantes</h3>
-                            <table class="w-full border-collapse border border-gray-300">
-                                <thead class="bg-gray-100">
-                                    <tr>
-                                        <th class="border border-gray-300 px-4 py-2">Date</th>
-                                        <th class="border border-gray-300 px-4 py-2">Horaires / Statut</th>
-                                        <th class="border border-gray-300 px-4 py-2">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($exceptions as $exc): ?>
+                            <div class="overflow-x-auto">
+                                <table class="w-full border-collapse border border-gray-300 text-sm">
+                                    <thead class="bg-gray-100">
                                         <tr>
-                                            <td class="border border-gray-300 px-4 py-2"><?php echo htmlspecialchars($exc['date']); ?></td>
-                                            <td class="border border-gray-300 px-4 py-2">
-                                                <?php
-                                                if ($exc['ferme']) {
-                                                    echo 'Fermé';
-                                                } else {
-                                                    echo htmlspecialchars($exc['h_debut'] . ' - ' . $exc['h_fin']);
-                                                }
-                                                ?>
-                                            </td>
-                                            <td class="border border-gray-300 px-4 py-2">
-                                                <a href="?page=exceptions&action=delete_exception&id=<?php echo $exc['id']; ?>" onclick="return confirm('Confirmer la suppression ?')" class="text-red-600 hover:text-red-800">
-                                                    Supprimer
-                                                </a>
-                                            </td>
+                                            <th class="border border-gray-300 px-2 md:px-4 py-2">Date</th>
+                                            <th class="border border-gray-300 px-2 md:px-4 py-2">Horaires / Statut</th>
+                                            <th class="border border-gray-300 px-2 md:px-4 py-2">Actions</th>
                                         </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($exceptions as $exc): ?>
+                                            <tr>
+                                                <td class="border border-gray-300 px-2 md:px-4 py-2"><?php echo htmlspecialchars($exc['date']); ?></td>
+                                                <td class="border border-gray-300 px-2 md:px-4 py-2 text-sm">
+                                                    <?php
+                                                    if ($exc['ferme']) {
+                                                        echo 'Fermé';
+                                                    } else {
+                                                        echo htmlspecialchars($exc['h_debut'] . ' - ' . $exc['h_fin']);
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td class="border border-gray-300 px-2 md:px-4 py-2">
+                                                    <a href="?page=exceptions&action=delete_exception&id=<?php echo $exc['id']; ?>" onclick="return confirm('Confirmer la suppression ?')" class="text-red-600 hover:text-red-800 cursor-pointer text-sm">
+                                                        Supprimer
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     <?php
                     // Page des fichiers
                     elseif ($page === 'files'):
                     ?>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-6">Gestion des PDF</h1>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Gestion des PDF</h1>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                             <?php
                             $pdfs = [
                                 ['type' => 'carte-food', 'label' => 'Carte des plats', 'file' => 'carte-food.pdf'],
@@ -729,7 +849,7 @@ if ($isAuthenticated && $pdo) {
                                 $exists = file_exists($filePath);
                                 $size = $exists ? filesize($filePath) : 0;
                             ?>
-                                <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="bg-white p-4 md:p-6 rounded-lg shadow">
                                     <h3 class="text-lg font-semibold text-gray-900 mb-4"><?php echo htmlspecialchars($pdf['label']); ?></h3>
                                     <p class="text-sm text-gray-600 mb-4">
                                         <?php echo $exists ? 'Fichier présent (' . number_format($size / 1024, 2) . ' KB)' : 'Aucun fichier'; ?>
@@ -742,16 +862,16 @@ if ($isAuthenticated && $pdo) {
                                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken(), ENT_QUOTES, 'UTF-8'); ?>" />
 
                                         <div class="mb-4">
-                                            <input type="file" name="pdf_file" accept="application/pdf" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                            <input type="file" name="pdf_file" accept="application/pdf" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
                                         </div>
 
-                                        <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                        <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer">
                                             Télécharger
                                         </button>
                                     </form>
 
                                     <?php if ($exists): ?>
-                                        <a href="/files/<?php echo htmlspecialchars($pdf['file']); ?>" target="_blank" class="block text-center mt-3 text-sm text-blue-600 hover:text-blue-800">
+                                        <a href="/files/<?php echo htmlspecialchars($pdf['file']); ?>" target="_blank" class="block text-center mt-3 text-sm text-blue-600 hover:text-blue-800 cursor-pointer">
                                             Voir le PDF
                                         </a>
                                     <?php endif; ?>
