@@ -297,48 +297,69 @@ $statusClasses = $isOpenNow
 
     <main class="mx-auto max-w-6xl px-6 py-16 lg:px-10">
         <section id="a-propos" class="mb-16">
-            <h2 class="section-title mb-6 text-center text-2xl">A propos</h2>
-            <div class="grid gap-6 md:grid-cols-2">
-                <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
-                    <p class="text-lg leading-8 text-zinc-700">
-                        <?php echo nl2br($aboutText); ?>
-                    </p>
+            <h2 class="section-title mb-8 text-center text-2xl">A propos</h2>
+            <div id="carousel-apropos" class="relative w-full" data-carousel>
+                <div class="relative h-[300px] md:h-[600px] overflow-hidden rounded-lg shadow-sm">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+                        <img src="img/a_propos1.jpg" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="À propos 1">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="img/a_propos2.JPG" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="À propos 2">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="img/a_propos3.JPG" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="À propos 3">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="img/a_propos4.JPG" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="À propos 4">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="img/a_propos5.JPG" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="À propos 5">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="img/a_propos6.JPG" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="À propos 6">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="img/a_propos7.JPG" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="À propos 7">
+                    </div>
                 </div>
-                <?php if (!empty($aboutText2)): ?>
-                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
-                        <p class="text-lg leading-8 text-zinc-700">
-                            <?php echo nl2br($aboutText2); ?>
-                        </p>
-                    </div>
-                <?php endif; ?>
-                <?php if (!empty($aboutText3)): ?>
-                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
-                        <p class="text-lg leading-8 text-zinc-700">
-                            <?php echo nl2br($aboutText3); ?>
-                        </p>
-                    </div>
-                <?php endif; ?>
-                <?php if (!empty($aboutText4)): ?>
-                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
-                        <p class="text-lg leading-8 text-zinc-700">
-                            <?php echo nl2br($aboutText4); ?>
-                        </p>
-                    </div>
-                <?php endif; ?>
-                <?php if (!empty($aboutText5)): ?>
-                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
-                        <p class="text-lg leading-8 text-zinc-700">
-                            <?php echo nl2br($aboutText5); ?>
-                        </p>
-                    </div>
-                <?php endif; ?>
-                <?php if (!empty($aboutText6)): ?>
-                    <div class="rounded-lg border border-zinc-200 bg-[#EDE8D0] p-8 shadow-sm">
-                        <p class="text-lg leading-8 text-zinc-700">
-                            <?php echo nl2br($aboutText6); ?>
-                        </p>
-                    </div>
-                <?php endif; ?>
+                <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/30 group-hover:bg-black/50">
+                        <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                        </svg>
+                    </span>
+                </button>
+                <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/30 group-hover:bg-black/50">
+                        <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </section>
+
+        <section id="nos-valeurs" class="mb-16">
+            <h2 class="section-title mb-8 text-center text-2xl">Nos valeurs</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="aspect-square overflow-hidden rounded-lg shadow-sm">
+                    <img src="img/valeur1.jpg" alt="Valeur 1" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg shadow-sm">
+                    <img src="img/valeur2.jpg" alt="Valeur 2" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg shadow-sm">
+                    <img src="img/valeur3.jpg" alt="Valeur 3" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg shadow-sm">
+                    <img src="img/valeur4.jpg" alt="Valeur 4" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg shadow-sm">
+                    <img src="img/valeur5.jpg" alt="Valeur 5" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg shadow-sm">
+                    <img src="img/valeur6.jpg" alt="Valeur 6" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                </div>
             </div>
         </section>
 
@@ -440,6 +461,22 @@ $statusClasses = $isOpenNow
     <?php include __DIR__ . '/components/footer.php'; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var carouselEl = document.getElementById('carousel-apropos');
+            if (!carouselEl) return;
+            var nextBtn = carouselEl.querySelector('[data-carousel-next]');
+            if (!nextBtn) return;
+
+            var paused = false;
+            setInterval(function () {
+                if (!paused) nextBtn.click();
+            }, 6000);
+
+            carouselEl.addEventListener('mouseenter', function () { paused = true; });
+            carouselEl.addEventListener('mouseleave', function () { paused = false; });
+        });
+    </script>
 </body>
 </html>
 
